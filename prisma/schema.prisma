@@ -13,6 +13,12 @@ enum RolUsuario {
   AGENTE
 }
 
+enum ClienteEstado {
+  ACTIVO
+  INACTIVO
+  BLOQUEADO
+}
+
 model Usuario {
   id              String       @id @default(uuid())
   nombre          String
@@ -30,4 +36,18 @@ model Usuario {
   conversaciones  String?
 
   @@map("usuario")
+}
+
+model Cliente {
+  id             String        @id @default(uuid())
+  nombre         String
+  apodo          String
+  email          String?
+  telefono       String        @unique
+  etiquetas      String[]      @default([])
+  estado         ClienteEstado @default(ACTIVO)
+  creadoEn       DateTime      @default(now())
+  conversaciones String?
+
+  @@map("cliente")
 }
