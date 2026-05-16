@@ -8,18 +8,26 @@ datasource db {
   provider = "postgresql"
 }
 
+enum RolUsuario {
+  ADMIN
+  AGENTE
+}
+
 model Usuario {
-  id        String  @id @default(uuid())
-  nombre    String
-  apellidos String
-  edad      Int
-  ci        String  @unique
-  email     String  @unique
-  password  String
-  telefono  String?
-  estado    Boolean @default(true)
-  creadoEn DateTime @default(now()) @map("creado_en")
-  actualizadoEn DateTime @map("actualizdo_en") @updatedAt
+  id              String       @id @default(uuid())
+  nombre          String
+  apellidos       String
+  edad            Int
+  ci              String       @unique
+  email           String       @unique
+  fechaNacimiento DateTime?    @map("fecha_nacimiento")
+  rol             RolUsuario[] @default([AGENTE])
+  password        String
+  telefono        String?
+  estado          Boolean      @default(true)
+  creadoEn        DateTime     @default(now()) @map("creado_en")
+  actualizadoEn   DateTime     @updatedAt @map("actualizdo_en")
+  conversaciones  String?
 
   @@map("usuario")
 }
